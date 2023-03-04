@@ -57,6 +57,7 @@ export const likePost = async (req, res) => {
 		const { userId } = req.body;
 		const post = await Post.findById(id);
 		const isLiked = post.likes.get(userId);
+
 		if (isLiked) post.likes.delete(userId);
 		else post.likes.set(userId, true);
 
@@ -66,7 +67,7 @@ export const likePost = async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json();
+		res.status(200).json(updatedPost);
 	} catch (err) {
 		res.status(404).json({ message: err.massage });
 	}

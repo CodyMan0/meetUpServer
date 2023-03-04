@@ -28,8 +28,8 @@ export const register = async (req, res) => {
 			friends,
 			location,
 			occupation,
-			viewedProfile: Math.floor(Math.random * 10000),
-			impression: Math.floor(Math.random * 10000),
+			viewedProfile: Math.floor(Math.random() * 10000),
+			impression: Math.floor(Math.random() * 10000),
 		});
 
 		const savedUser = await newUser.save();
@@ -51,7 +51,7 @@ export const login = async (req, res) => {
 
 		const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 		delete user.password;
-		res.status(200).json({ token, user }); 
+		res.status(200).json({ token, user });
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}

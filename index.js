@@ -9,7 +9,7 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
@@ -31,12 +31,12 @@ app.use(bodyParser.json({ limit: "30mb", extends: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 // 간단하게 로컬에서 이미지 저장하도록 설정
-app.use("/asset", express.static(path.join(__dirname, "public/assets")));
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 //file storage
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, "/public/asset");
+		cb(null, "public/assets");
 	},
 	filename: function (req, file, cb) {
 		cb(null, file.originalname);
@@ -45,15 +45,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Routes with files
+// Routes with filesx
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 // Routes
 
 app.use("/auth", authRoutes);
-app.use("users", userRoutes);
-app.use("/post", postRoutes);
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 //MONGOOSE SETUP
 
 const PORT = process.env.PORT || 6001;
