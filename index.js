@@ -30,6 +30,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extends: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+
 // 간단하게 로컬에서 이미지 저장하도록 설정
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
@@ -67,7 +68,6 @@ mongoose
 	})
 	.then(() => {
 		app.listen(PORT, () => console.log(`Server Port : ${PORT}`));
-
 		//add Data onTime
 		// User.insertMany(users);
 		// Post.insertMany(posts);
